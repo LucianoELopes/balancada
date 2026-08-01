@@ -2,10 +2,14 @@
 // SUPABASE
 // ===============================
 
-const supabase = window.supabase.createClient(
+const { createClient } = window.supabase;
+
+const supabase = createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+
+console.log("Supabase OK");
 
 // Buscar todos os jogadores
 async function loadPlayers() {
