@@ -94,12 +94,25 @@ button:hover{
 
 .player{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    gap:10px;
     padding:12px;
     margin-top:10px;
     border-radius:10px;
     background:#334155;
+}
+
+.player-info{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.player-info span{
+    color:#94a3b8;
+    font-size:.9rem;
 }
 
 .player-actions{
@@ -117,6 +130,7 @@ button:hover{
     display:flex;
     align-items:center;
     justify-content:center;
+    flex-shrink:0;
 }
 
 .btn-edit{
@@ -133,6 +147,14 @@ button:hover{
 
 .btn-delete:hover{
     background:#dc2626;
+}
+
+button.editing{
+    background:#f59e0b;
+}
+
+button.editing:hover{
+    background:#d97706;
 }
 
 /* Modal */

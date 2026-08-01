@@ -22,62 +22,6 @@ const playersPerTeam = document.getElementById("playersPerTeam");
 
 let editingId = null;
 
-function openEditModal(player) {
-
-    editingId = player.id;
-
-    document.getElementById("editName").value = player.name;
-    document.getElementById("editLevel").value = player.level;
-    document.getElementById("editGoalkeeper").checked = player.goalkeeper;
-
-    document.getElementById("editModal").classList.add("open");
-
-}
-
-function closeEditModal() {
-
-    editingId = null;
-
-    document.getElementById("editModal").classList.remove("open");
-
-}
-
-document.getElementById("editSave").onclick = async () => {
-
-    const name = document.getElementById("editName").value.trim();
-
-    if (!name) {
-        alert("Informe o nome.");
-        return;
-    }
-
-    const btn = document.getElementById("editSave");
-    btn.disabled = true;
-    btn.textContent = "Salvando...";
-
-    const ok = await updatePlayerDB(
-        editingId,
-        name,
-        Number(document.getElementById("editLevel").value),
-        document.getElementById("editGoalkeeper").checked
-    );
-
-    btn.disabled = false;
-    btn.textContent = "💾 Salvar";
-
-    if (!ok) return;
-
-    closeEditModal();
-    await loadScreen();
-
-};
-
-document.getElementById("editCancel").onclick = () => closeEditModal();
-
-document.getElementById("editModal").onclick = (e) => {
-    if (e.target === document.getElementById("editModal")) closeEditModal();
-};
-
 // ==========================================
 
 function renderPlayers() {
@@ -103,19 +47,32 @@ function renderPlayers() {
         div.className = "player";
 
         div.innerHTML = `
-            <div>
+            <button class="btn-edit" data-id="${player.id}" title="Editar">✏️</button>
+
+            <div class="player-info">
                 ${player.goalkeeper ? "🥅 " : ""}
-                <strong>${player.name}</strong><br>
-                ⭐ ${player.level}
+                <strong>${player.name}</strong>
+                <span>⭐ ${player.level}</span>
             </div>
 
-            <div class="player-actions">
-                <button class="btn-edit" data-id="${player.id}">✏️</button>
-                <button class="btn-delete" data-id="${player.id}">🗑️</button>
-            </div>
+            <button class="btn-delete" data-id="${player.id}" title="Excluir">🗑️</button>
         `;
 
-        div.querySelector(".btn-edit").onclick = () => openEditModal(player);
+        div.querySelector(".btn-edit").onclick = () => {
+
+            editingId = player.id;
+
+            playerName.value = player.name;
+            playerLevel.value = player.level;
+            goalkeeper.checked = player.goalkeeper;
+
+            addPlayerBtn.textContent = "💾 Salvar Alterações";
+            addPlayerBtn.classList.add("editing");
+
+            playerName.focus();
+            playerName.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        };
 
         div.querySelector(".btn-delete").onclick = async () => {
 
@@ -160,22 +117,42 @@ addPlayerBtn.onclick = async () => {
     }
 
     addPlayerBtn.disabled = true;
-    addPlayerBtn.textContent = "Salvando...";
 
-    const ok = await addPlayerDB(
+    if (editingId) {
 
-        name,
+        // modo edição
+        const ok = await updatePlayerDB(
+            editingId,
+            name,
+            Number(playerLevel.value),
+            goalkeeper.checked
+        );
 
-        Number(playerLevel.value),
+        addPlayerBtn.disabled = false;
 
-        goalkeeper.checked
+        if (!ok) return;
 
-    );
+        editingId = null;
+        addPlayerBtn.textContent = "➕ Adicionar Jogador";
+        addPlayerBtn.classList.remove("editing");
 
-    addPlayerBtn.disabled = false;
-    addPlayerBtn.textContent = "➕ Adicionar Jogador";
+    } else {
 
-    if (!ok) return;
+        // modo adição
+        addPlayerBtn.textContent = "Salvando...";
+
+        const ok = await addPlayerDB(
+            name,
+            Number(playerLevel.value),
+            goalkeeper.checked
+        );
+
+        addPlayerBtn.disabled = false;
+        addPlayerBtn.textContent = "➕ Adicionar Jogador";
+
+        if (!ok) return;
+
+    }
 
     playerName.value = "";
     playerLevel.value = "3";
