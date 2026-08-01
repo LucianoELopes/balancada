@@ -90,11 +90,14 @@ addPlayerBtn.onclick = async () => {
 
     if (!name) {
 
-        alert("Informe o nome.");
+        alert("Informe o nome do jogador.");
 
         return;
 
     }
+
+    addPlayerBtn.disabled = true;
+    addPlayerBtn.textContent = "Salvando...";
 
     const ok = await addPlayerDB(
 
@@ -105,6 +108,9 @@ addPlayerBtn.onclick = async () => {
         goalkeeper.checked
 
     );
+
+    addPlayerBtn.disabled = false;
+    addPlayerBtn.textContent = "➕ Adicionar Jogador";
 
     if (!ok) return;
 

@@ -2,6 +2,12 @@
 // SUPABASE
 // ==========================================
 
+if (!SUPABASE_KEY || !SUPABASE_KEY.startsWith("eyJ")) {
+    console.error(
+        "⚠️ SUPABASE_KEY inválida! Acesse: Supabase → Settings → API → anon/public key"
+    );
+}
+
 const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
