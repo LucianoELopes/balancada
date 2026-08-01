@@ -47,15 +47,16 @@ function renderPlayers() {
         div.className = "player";
 
         div.innerHTML = `
-            <button class="btn-edit" data-id="${player.id}" title="Editar">✏️</button>
-
             <div class="player-info">
                 ${player.goalkeeper ? "🥅 " : ""}
                 <strong>${player.name}</strong>
                 <span>⭐ ${player.level}</span>
             </div>
 
-            <button class="btn-delete" data-id="${player.id}" title="Excluir">🗑️</button>
+            <div class="player-actions">
+                <button class="btn-edit" data-id="${player.id}" title="Editar">✏️</button>
+                <button class="btn-delete" data-id="${player.id}" title="Excluir">🗑️</button>
+            </div>
         `;
 
         div.querySelector(".btn-edit").onclick = () => {
