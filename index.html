@@ -106,15 +106,8 @@
 
     </div>
 
-    <!-- Supabase -->
-    <script type="module">
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-window.createClient = createClient;
-</script>
-
-    <script>
-        alert("window.supabase = " + typeof window.supabase);
-    </script>
+    <!-- SDK Oficial do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- Configuração -->
     <script src="config.js"></script>
