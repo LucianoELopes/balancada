@@ -30,12 +30,16 @@ async function loadPlayers() {
 // Salvar jogador
 async function savePlayer(player) {
 
-    const { error } = await supabase
+    const { data, error } = await supabase
         .from("players")
-        .insert(player);
+        .insert(player)
+        .select();
+
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
     if (error) {
-        console.error(error);
+        alert(error.message);
     }
 
 }
