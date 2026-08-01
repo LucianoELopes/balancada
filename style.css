@@ -121,7 +121,8 @@ button:hover{
 }
 
 .btn-edit,
-.btn-delete{
+.btn-delete,
+.btn-toggle{
     width:40px;
     height:40px;
     padding:0;
@@ -131,6 +132,37 @@ button:hover{
     align-items:center;
     justify-content:center;
     flex-shrink:0;
+}
+
+.btn-toggle.active{
+    background:#22c55e;
+}
+
+.btn-toggle.active:hover{
+    background:#16a34a;
+}
+
+.btn-toggle.inactive{
+    background:#475569;
+}
+
+.btn-toggle.inactive:hover{
+    background:#334155;
+}
+
+.player-inactive{
+    opacity:.5;
+}
+
+.inactive-label{
+    color:#64748b;
+    font-size:.8rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin-top:14px;
+    margin-bottom:4px;
+    padding-left:4px;
 }
 
 .btn-edit{

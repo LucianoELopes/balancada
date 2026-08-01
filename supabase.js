@@ -8,7 +8,7 @@ var supabaseClient = window.supabase.createClient(
 );
 
 // ==========================================
-// Buscar jogadores
+// Buscar jogadores (todos, ativos e inativos)
 // ==========================================
 
 async function getPlayers() {
@@ -16,7 +16,6 @@ async function getPlayers() {
     const { data, error } = await supabaseClient
         .from("players")
         .select("*")
-        .eq("active", true)
         .order("name", { ascending: true });
 
     if (error) {
@@ -26,6 +25,26 @@ async function getPlayers() {
     }
 
     return data ?? [];
+
+}
+
+// ==========================================
+// Alternar ativo/inativo
+// ==========================================
+
+async function toggleActiveDB(id, active) {
+
+    const { error } = await supabaseClient
+        .from("players")
+        .update({ active: active })
+        .eq("id", id);
+
+    if (error) {
+        console.error("Erro ao atualizar status:", error);
+        return false;
+    }
+
+    return true;
 
 }
 

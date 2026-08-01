@@ -40,11 +40,13 @@ function renderPlayers() {
 
     playerList.innerHTML = "";
 
-    players.forEach(player => {
+    const active   = players.filter(p => p.active);
+    const inactive = players.filter(p => !p.active);
+
+    function createPlayerRow(player) {
 
         const div = document.createElement("div");
-
-        div.className = "player";
+        div.className = "player" + (player.active ? "" : " player-inactive");
 
         div.innerHTML = `
             <div class="player-info">
@@ -54,15 +56,24 @@ function renderPlayers() {
             </div>
 
             <div class="player-actions">
+                <button class="btn-toggle ${player.active ? "active" : "inactive"}"
+                    data-id="${player.id}"
+                    title="${player.active ? "Desativar" : "Ativar"}">
+                    ${player.active ? "✅" : "⛔"}
+                </button>
                 <button class="btn-edit" data-id="${player.id}" title="Editar">✏️</button>
                 <button class="btn-delete" data-id="${player.id}" title="Excluir">🗑️</button>
             </div>
         `;
 
+        div.querySelector(".btn-toggle").onclick = async () => {
+            await toggleActiveDB(player.id, !player.active);
+            await loadScreen();
+        };
+
         div.querySelector(".btn-edit").onclick = () => {
 
             editingId = player.id;
-
             playerName.value = player.name;
             playerLevel.value = player.level;
             goalkeeper.checked = player.goalkeeper;
@@ -76,20 +87,26 @@ function renderPlayers() {
         };
 
         div.querySelector(".btn-delete").onclick = async () => {
-
             const ok = await deletePlayerDB(player.id);
-
-            if (ok) {
-
-                await loadScreen();
-
-            }
-
+            if (ok) await loadScreen();
         };
 
-        playerList.appendChild(div);
+        return div;
 
-    });
+    }
+
+    active.forEach(p => playerList.appendChild(createPlayerRow(p)));
+
+    if (inactive.length > 0) {
+
+        const divider = document.createElement("p");
+        divider.className = "inactive-label";
+        divider.textContent = "⛔ Inativos (fora do sorteio)";
+        playerList.appendChild(divider);
+
+        inactive.forEach(p => playerList.appendChild(createPlayerRow(p)));
+
+    }
 
 }
 
@@ -169,9 +186,11 @@ addPlayerBtn.onclick = async () => {
 
 drawTeamsBtn.onclick = async () => {
 
+    const activePlayers = players.filter(p => p.active);
+
     const teams = sortTeams(
 
-        players,
+        activePlayers,
 
         Number(playersPerTeam.value)
 
