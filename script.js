@@ -146,6 +146,9 @@ copyResultBtn.addEventListener("click", () => {
 
 // ===============================
 
-addPlayerBtn.addEventListener("click", addPlayer);
+addPlayerBtn.onclick = () => {
+    alert("Clique funcionando!");
+    addPlayer();
+};
 
 refreshPlayers();
