@@ -162,3 +162,5 @@ async function refreshPlayers() {
     renderPlayers();
 
 }
+
+refreshPlayers();
