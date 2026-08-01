@@ -122,6 +122,8 @@ addPlayerBtn.onclick = async () => {
     if (editingId) {
 
         // modo edição
+        addPlayerBtn.textContent = "Salvando...";
+
         const ok = await updatePlayerDB(
             editingId,
             name,
@@ -130,12 +132,12 @@ addPlayerBtn.onclick = async () => {
         );
 
         addPlayerBtn.disabled = false;
+        addPlayerBtn.textContent = "➕ Adicionar Jogador";
+        addPlayerBtn.classList.remove("editing");
 
         if (!ok) return;
 
         editingId = null;
-        addPlayerBtn.textContent = "➕ Adicionar Jogador";
-        addPlayerBtn.classList.remove("editing");
 
     } else {
 

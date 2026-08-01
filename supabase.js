@@ -60,18 +60,25 @@ async function addPlayerDB(name, level, goalkeeper) {
 
 async function updatePlayerDB(id, name, level, goalkeeper) {
 
-    const { error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from("players")
         .update({
             name: name,
             level: level,
             goalkeeper: goalkeeper
         })
-        .eq("id", id);
+        .eq("id", id)
+        .select();
 
     if (error) {
         alert("Erro ao atualizar:\n\n" + error.message);
         console.error(error);
+        return false;
+    }
+
+    if (!data || data.length === 0) {
+        alert("Nenhum jogador foi atualizado. Verifique as permissões no banco.");
+        console.warn("Update retornou sem dados:", { id, name, level, goalkeeper });
         return false;
     }
 
