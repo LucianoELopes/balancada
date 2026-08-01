@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -131,21 +132,20 @@
 
     </div>
 
-    <!-- Supabase -->
+    <!-- Biblioteca do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-alert(typeof window.supabase);
-</script>
-
-<script src="config.js"></script>
-<script src="supabase.js"></script>
+    <script>
+        alert("window.supabase = " + typeof window.supabase);
+    </script>
 
     <!-- Configuração -->
     <script src="config.js"></script>
+
+    <!-- Integração Supabase -->
     <script src="supabase.js"></script>
 
-    <!-- Aplicação -->
+    <!-- Lógica do aplicativo -->
     <script src="draw.js"></script>
     <script src="result.js"></script>
     <script src="script.js"></script>
