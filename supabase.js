@@ -2,13 +2,7 @@
 // SUPABASE
 // ==========================================
 
-if (!SUPABASE_KEY || !SUPABASE_KEY.startsWith("eyJ")) {
-    console.error(
-        "⚠️ SUPABASE_KEY inválida! Acesse: Supabase → Settings → API → anon/public key"
-    );
-}
-
-const supabase = window.supabase.createClient(
+var supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
@@ -19,7 +13,7 @@ const supabase = window.supabase.createClient(
 
 async function getPlayers() {
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from("players")
         .select("*")
         .eq("active", true)
@@ -41,7 +35,7 @@ async function getPlayers() {
 
 async function addPlayerDB(name, level, goalkeeper) {
 
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from("players")
         .insert([{
             name: name,
@@ -66,7 +60,7 @@ async function addPlayerDB(name, level, goalkeeper) {
 
 async function deletePlayerDB(id) {
 
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from("players")
         .delete()
         .eq("id", id);
