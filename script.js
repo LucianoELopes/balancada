@@ -1,21 +1,24 @@
-// ===============================
+// ==========================================
 // BALANÇADA
-// Cadastro de jogadores
-// ===============================
+// script.js
+// ==========================================
 
 let players = [];
 
 const playerList = document.getElementById("playerList");
-const addPlayerBtn = document.getElementById("addPlayer");
-const drawTeamsBtn = document.getElementById("drawTeams");
-const copyResultBtn = document.getElementById("copyResult");
 
 const playerName = document.getElementById("playerName");
 const playerLevel = document.getElementById("playerLevel");
 const goalkeeper = document.getElementById("goalkeeper");
+
+const addPlayerBtn = document.getElementById("addPlayer");
+
+const drawTeamsBtn = document.getElementById("drawTeams");
+const copyResultBtn = document.getElementById("copyResult");
+
 const playersPerTeam = document.getElementById("playersPerTeam");
 
-// ===============================
+// ==========================================
 
 function renderPlayers() {
 
@@ -28,35 +31,40 @@ function renderPlayers() {
         `;
 
         return;
+
     }
 
     playerList.innerHTML = "";
 
-    players.forEach((player) => {
+    players.forEach(player => {
 
         const div = document.createElement("div");
 
         div.className = "player";
 
         div.innerHTML = `
-
             <div>
-
                 ${player.goalkeeper ? "🥅 " : ""}
-
                 <strong>${player.name}</strong><br>
-
                 ⭐ ${player.level}
-
             </div>
 
-            <button onclick="removePlayer(${player.id})">
-
+            <button data-id="${player.id}">
                 ❌
-
             </button>
-
         `;
+
+        div.querySelector("button").onclick = async () => {
+
+            const ok = await deletePlayerDB(player.id);
+
+            if (ok) {
+
+                await loadScreen();
+
+            }
+
+        };
 
         playerList.appendChild(div);
 
@@ -64,103 +72,76 @@ function renderPlayers() {
 
 }
 
-// ===============================
+// ==========================================
 
-async function refreshPlayers() {
+async function loadScreen() {
 
-    players = await loadPlayers();
+    players = await getPlayers();
 
     renderPlayers();
 
 }
 
-// ===============================
+// ==========================================
 
-async function addPlayer() {
+addPlayerBtn.onclick = async () => {
 
     const name = playerName.value.trim();
 
     if (!name) {
 
-        alert("Informe o nome do jogador.");
+        alert("Informe o nome.");
 
         return;
 
     }
 
-    await savePlayer({
+    const ok = await addPlayerDB(
 
         name,
 
-        level: Number(playerLevel.value),
+        Number(playerLevel.value),
 
-        goalkeeper: goalkeeper.checked
+        goalkeeper.checked
 
-    });
+    );
+
+    if (!ok) return;
 
     playerName.value = "";
-
     playerLevel.value = "3";
-
     goalkeeper.checked = false;
 
-    playerName.focus();
+    await loadScreen();
 
-    await refreshPlayers();
+};
 
-}
+// ==========================================
 
-// ===============================
+drawTeamsBtn.onclick = () => {
 
-async function removePlayer(id) {
+    const teams = sortTeams(
 
-    await deletePlayer(id);
+        players,
 
-    await refreshPlayers();
+        Number(playersPerTeam.value)
 
-}
+    );
 
-// ===============================
-// Sorteio
-// ===============================
+    if (teams) {
 
-drawTeamsBtn.addEventListener("click", () => {
+        renderResult(teams);
 
-    const qtd = Number(playersPerTeam.value);
+    }
 
-    const teams = sortTeams(players, qtd);
+};
 
-    if (!teams) return;
-
-    renderResult(teams);
-
-});
-
-// ===============================
-
-copyResultBtn.addEventListener("click", () => {
+copyResultBtn.onclick = () => {
 
     copyResult();
 
-});
-
-// ===============================
-
-addPlayerBtn.onclick = () => {
-    alert("Clique funcionando!");
-    addPlayer();
 };
 
-async function refreshPlayers() {
+// ==========================================
 
-    const data = await loadPlayers();
-
-    alert(JSON.stringify(data));
-
-    players = data;
-
-    renderPlayers();
-
-}
-
-refreshPlayers();
+loadScreen();
