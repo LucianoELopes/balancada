@@ -1,20 +1,22 @@
 // ===============================
 // BALANÇADA
-// Módulo 1
-// Cadastro de jogadores
+// script.js
+// Cadastro + Integração
 // ===============================
 
-const players = JSON.parse(localStorage.getItem("balancada_players") || "[]");
+const players = JSON.parse(
+    localStorage.getItem("balancada_players") || "[]"
+);
 
 const playerList = document.getElementById("playerList");
-
 const addPlayerBtn = document.getElementById("addPlayer");
+const drawTeamsBtn = document.getElementById("drawTeams");
+const copyResultBtn = document.getElementById("copyResult");
 
 const playerName = document.getElementById("playerName");
-
 const playerLevel = document.getElementById("playerLevel");
-
 const goalkeeper = document.getElementById("goalkeeper");
+const playersPerTeam = document.getElementById("playersPerTeam");
 
 function savePlayers() {
 
@@ -48,15 +50,23 @@ function renderPlayers() {
         div.className = "player";
 
         div.innerHTML = `
+
             <div>
+
                 ${player.goalkeeper ? "🥅 " : ""}
+
                 <strong>${player.name}</strong><br>
+
                 ⭐ ${player.level}
+
             </div>
 
             <button onclick="removePlayer(${index})">
+
                 ❌
+
             </button>
+
         `;
 
         playerList.appendChild(div);
@@ -110,6 +120,30 @@ function removePlayer(index) {
     renderPlayers();
 
 }
+
+// ===============================
+// Integração do sorteio
+// ===============================
+
+drawTeamsBtn.addEventListener("click", () => {
+
+    const qtd = Number(playersPerTeam.value);
+
+    const teams = sortTeams(players, qtd);
+
+    if (!teams) return;
+
+    renderResult(teams);
+
+});
+
+copyResultBtn.addEventListener("click", () => {
+
+    copyResult();
+
+});
+
+// ===============================
 
 addPlayerBtn.addEventListener("click", addPlayer);
 
