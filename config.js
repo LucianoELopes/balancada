@@ -1,0 +1,3 @@
+const SUPABASE_URL = "https://hidsfioepfrblkakrtfe.supabase.co";
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhpZHNmaW9lcGZyYmxrYWtydGZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU1OTE2MDMsImV4cCI6MjEwMTE2NzYwM30.jeOIE7BlAPzMrEetEp8YoyScy_6ujBbIKYkagoplWAk";

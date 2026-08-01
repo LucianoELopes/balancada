@@ -1,0 +1,147 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:#fff;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:0 auto;
+}
+
+header{
+    margin-bottom:20px;
+}
+
+header h1{
+    font-size:2rem;
+}
+
+header p{
+    color:#94a3b8;
+    margin-top:6px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+h2{
+    margin-bottom:14px;
+    font-size:1.2rem;
+}
+
+label{
+    display:block;
+    margin:10px 0 6px;
+    font-weight:600;
+}
+
+input[type=text],
+input[type=number],
+select{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.goalkeeper{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:15px 0;
+}
+
+.goalkeeper input{
+    width:22px;
+    height:22px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#22c55e;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+.drawButton{
+    font-size:20px;
+}
+
+.player{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    background:#334155;
+}
+
+.player button{
+    width:auto;
+    padding:8px 12px;
+    background:#ef4444;
+}
+
+.player button:hover{
+    background:#dc2626;
+}
+
+.empty{
+    color:#94a3b8;
+    text-align:center;
+    padding:25px;
+}
+
+.team{
+    background:#334155;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.team h3{
+    margin-bottom:10px;
+    color:#22c55e;
+}
+
+.total{
+    margin-top:10px;
+    font-weight:bold;
+    color:#facc15;
+}
+
+.reserve{
+    margin-top:10px;
+    color:#cbd5e1;
+    font-size:.95rem;
+}
+
+#copyResult{
+    margin-top:15px;
+}
