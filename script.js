@@ -1,12 +1,9 @@
 // ===============================
 // BALANÇADA
-// script.js
-// Cadastro + Integração
+// Cadastro de jogadores
 // ===============================
 
-const players = JSON.parse(
-    localStorage.getItem("balancada_players") || "[]"
-);
+let players = [];
 
 const playerList = document.getElementById("playerList");
 const addPlayerBtn = document.getElementById("addPlayer");
@@ -18,14 +15,7 @@ const playerLevel = document.getElementById("playerLevel");
 const goalkeeper = document.getElementById("goalkeeper");
 const playersPerTeam = document.getElementById("playersPerTeam");
 
-function savePlayers() {
-
-    localStorage.setItem(
-        "balancada_players",
-        JSON.stringify(players)
-    );
-
-}
+// ===============================
 
 function renderPlayers() {
 
@@ -38,12 +28,11 @@ function renderPlayers() {
         `;
 
         return;
-
     }
 
     playerList.innerHTML = "";
 
-    players.forEach((player, index) => {
+    players.forEach((player) => {
 
         const div = document.createElement("div");
 
@@ -61,7 +50,7 @@ function renderPlayers() {
 
             </div>
 
-            <button onclick="removePlayer(${index})">
+            <button onclick="removePlayer(${player.id})">
 
                 ❌
 
@@ -75,7 +64,19 @@ function renderPlayers() {
 
 }
 
-function addPlayer() {
+// ===============================
+
+async function refreshPlayers() {
+
+    players = await loadPlayers();
+
+    renderPlayers();
+
+}
+
+// ===============================
+
+async function addPlayer() {
 
     const name = playerName.value.trim();
 
@@ -87,7 +88,7 @@ function addPlayer() {
 
     }
 
-    players.push({
+    await savePlayer({
 
         name,
 
@@ -97,10 +98,6 @@ function addPlayer() {
 
     });
 
-    savePlayers();
-
-    renderPlayers();
-
     playerName.value = "";
 
     playerLevel.value = "3";
@@ -109,20 +106,22 @@ function addPlayer() {
 
     playerName.focus();
 
-}
-
-function removePlayer(index) {
-
-    players.splice(index, 1);
-
-    savePlayers();
-
-    renderPlayers();
+    await refreshPlayers();
 
 }
 
 // ===============================
-// Integração do sorteio
+
+async function removePlayer(id) {
+
+    await deletePlayer(id);
+
+    await refreshPlayers();
+
+}
+
+// ===============================
+// Sorteio
 // ===============================
 
 drawTeamsBtn.addEventListener("click", () => {
@@ -137,6 +136,8 @@ drawTeamsBtn.addEventListener("click", () => {
 
 });
 
+// ===============================
+
 copyResultBtn.addEventListener("click", () => {
 
     copyResult();
@@ -147,4 +148,4 @@ copyResultBtn.addEventListener("click", () => {
 
 addPlayerBtn.addEventListener("click", addPlayer);
 
-renderPlayers();
+refreshPlayers();
