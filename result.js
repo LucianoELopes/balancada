@@ -4,7 +4,7 @@
 // Exibe o resultado do sorteio
 // ===============================
 
-function renderResult(teams) {
+function renderResult(teams, timestamp) {
 
     const result = document.getElementById("result");
 
@@ -13,6 +13,10 @@ function renderResult(teams) {
     }
 
     let html = "";
+
+    if (timestamp) {
+        html += `<p class="draw-time">🕐 Sorteado em: ${timestamp}</p>`;
+    }
 
     teams.forEach((team, index) => {
 

@@ -106,3 +106,44 @@ async function deletePlayerDB(id) {
     return true;
 
 }
+
+// ==========================================
+// Salvar sorteio
+// ==========================================
+
+async function saveDrawDB(teams) {
+
+    const { error } = await supabaseClient
+        .from("draws")
+        .insert([{ teams: teams }]);
+
+    if (error) {
+        console.error("Erro ao salvar sorteio:", error);
+        return false;
+    }
+
+    return true;
+
+}
+
+// ==========================================
+// Buscar último sorteio
+// ==========================================
+
+async function getLastDrawDB() {
+
+    const { data, error } = await supabaseClient
+        .from("draws")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+    if (error) {
+        // sem sorteio salvo ainda é normal
+        return null;
+    }
+
+    return data ?? null;
+
+}

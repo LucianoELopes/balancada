@@ -167,7 +167,7 @@ addPlayerBtn.onclick = async () => {
 
 // ==========================================
 
-drawTeamsBtn.onclick = () => {
+drawTeamsBtn.onclick = async () => {
 
     const teams = sortTeams(
 
@@ -179,7 +179,23 @@ drawTeamsBtn.onclick = () => {
 
     if (teams) {
 
-        renderResult(teams);
+        drawTeamsBtn.disabled = true;
+        drawTeamsBtn.textContent = "Sorteando...";
+
+        await saveDrawDB(teams);
+
+        drawTeamsBtn.disabled = false;
+        drawTeamsBtn.textContent = "🎲 Sortear Equipes";
+
+        const draw = await getLastDrawDB();
+        const timestamp = draw
+            ? new Date(draw.created_at).toLocaleString("pt-BR", {
+                day: "2-digit", month: "2-digit", year: "numeric",
+                hour: "2-digit", minute: "2-digit"
+              })
+            : null;
+
+        renderResult(teams, timestamp);
 
     }
 
@@ -194,3 +210,14 @@ copyResultBtn.onclick = () => {
 // ==========================================
 
 loadScreen();
+
+// Restaura último sorteio do banco de dados
+getLastDrawDB().then(draw => {
+    if (draw) {
+        const timestamp = new Date(draw.created_at).toLocaleString("pt-BR", {
+            day: "2-digit", month: "2-digit", year: "numeric",
+            hour: "2-digit", minute: "2-digit"
+        });
+        renderResult(draw.teams, timestamp);
+    }
+});
