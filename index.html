@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Balançada ⚽</title>
+
+    <meta name="theme-color" content="#16a34a">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <h1>⚽ Balançada</h1>
+
+            <p>
+                Monte equipes equilibradas em segundos.
+            </p>
+
+        </header>
+
+        <section class="card">
+
+            <label>Jogadores por equipe</label>
+
+            <input
+                type="number"
+                id="playersPerTeam"
+                value="5"
+                min="2"
+                max="11">
+
+        </section>
+
+        <section class="card">
+
+            <h2>Novo Jogador</h2>
+
+            <input
+                id="playerName"
+                type="text"
+                placeholder="Nome do jogador">
+
+            <label>Nível</label>
+
+            <select id="playerLevel">
+
+                <option value="1">⭐ 1</option>
+                <option value="2">⭐⭐ 2</option>
+                <option value="3" selected>⭐⭐⭐ 3</option>
+                <option value="4">⭐⭐⭐⭐ 4</option>
+                <option value="5">⭐⭐⭐⭐⭐ 5</option>
+
+            </select>
+
+            <label class="goalkeeper">
+
+                <input
+                    type="checkbox"
+                    id="goalkeeper">
+
+                🥅 É goleiro
+
+            </label>
+
+            <button id="addPlayer">
+
+                ➕ Adicionar Jogador
+
+            </button>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Jogadores</h2>
+
+            <div id="playerList">
+
+                <p class="empty">
+
+                    Nenhum jogador cadastrado.
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="card">
+
+            <button
+                class="drawButton"
+                id="drawTeams">
+
+                🎲 Sortear Equipes
+
+            </button>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Resultado</h2>
+
+            <div id="result">
+
+                <p class="empty">
+
+                    Nenhum sorteio realizado.
+
+                </p>
+
+            </div>
+
+            <button id="copyResult">
+
+                📋 Copiar Resultado
+
+            </button>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
