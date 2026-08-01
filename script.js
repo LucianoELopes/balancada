@@ -151,4 +151,14 @@ addPlayerBtn.onclick = () => {
     addPlayer();
 };
 
-refreshPlayers();
+async function refreshPlayers() {
+
+    const data = await loadPlayers();
+
+    alert(JSON.stringify(data));
+
+    players = data;
+
+    renderPlayers();
+
+}
