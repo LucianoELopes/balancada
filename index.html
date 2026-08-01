@@ -131,6 +131,34 @@
 
     </div>
 
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-box">
+            <h2>✏️ Editar Jogador</h2>
+
+            <input id="editName" type="text" placeholder="Nome do jogador">
+
+            <label>Nível</label>
+            <select id="editLevel">
+                <option value="1">⭐ 1</option>
+                <option value="2">⭐⭐ 2</option>
+                <option value="3" selected>⭐⭐⭐ 3</option>
+                <option value="4">⭐⭐⭐⭐ 4</option>
+                <option value="5">⭐⭐⭐⭐⭐ 5</option>
+            </select>
+
+            <label class="goalkeeper">
+                <input type="checkbox" id="editGoalkeeper">
+                🥅 É goleiro
+            </label>
+
+            <div class="modal-actions">
+                <button id="editCancel" class="btn-secondary">Cancelar</button>
+                <button id="editSave">💾 Salvar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- SDK Oficial do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 

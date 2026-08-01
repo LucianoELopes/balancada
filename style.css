@@ -102,14 +102,84 @@ button:hover{
     background:#334155;
 }
 
-.player button{
-    width:auto;
-    padding:8px 12px;
+.player-actions{
+    display:flex;
+    gap:8px;
+}
+
+.btn-edit,
+.btn-delete{
+    width:40px;
+    height:40px;
+    padding:0;
+    font-size:16px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.btn-edit{
+    background:#3b82f6;
+}
+
+.btn-edit:hover{
+    background:#2563eb;
+}
+
+.btn-delete{
     background:#ef4444;
 }
 
-.player button:hover{
+.btn-delete:hover{
     background:#dc2626;
+}
+
+/* Modal */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.open{
+    display:flex;
+}
+
+.modal-box{
+    background:#1e293b;
+    border-radius:16px;
+    padding:24px;
+    width:100%;
+    max-width:420px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.modal-box h2{
+    margin-bottom:16px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+}
+
+.modal-actions button{
+    flex:1;
+}
+
+.btn-secondary{
+    background:#475569;
+}
+
+.btn-secondary:hover{
+    background:#334155;
 }
 
 .empty{

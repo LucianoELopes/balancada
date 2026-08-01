@@ -20,6 +20,66 @@ const playersPerTeam = document.getElementById("playersPerTeam");
 
 // ==========================================
 
+let editingId = null;
+
+function openEditModal(player) {
+
+    editingId = player.id;
+
+    document.getElementById("editName").value = player.name;
+    document.getElementById("editLevel").value = player.level;
+    document.getElementById("editGoalkeeper").checked = player.goalkeeper;
+
+    document.getElementById("editModal").classList.add("open");
+
+}
+
+function closeEditModal() {
+
+    editingId = null;
+
+    document.getElementById("editModal").classList.remove("open");
+
+}
+
+document.getElementById("editSave").onclick = async () => {
+
+    const name = document.getElementById("editName").value.trim();
+
+    if (!name) {
+        alert("Informe o nome.");
+        return;
+    }
+
+    const btn = document.getElementById("editSave");
+    btn.disabled = true;
+    btn.textContent = "Salvando...";
+
+    const ok = await updatePlayerDB(
+        editingId,
+        name,
+        Number(document.getElementById("editLevel").value),
+        document.getElementById("editGoalkeeper").checked
+    );
+
+    btn.disabled = false;
+    btn.textContent = "💾 Salvar";
+
+    if (!ok) return;
+
+    closeEditModal();
+    await loadScreen();
+
+};
+
+document.getElementById("editCancel").onclick = () => closeEditModal();
+
+document.getElementById("editModal").onclick = (e) => {
+    if (e.target === document.getElementById("editModal")) closeEditModal();
+};
+
+// ==========================================
+
 function renderPlayers() {
 
     if (players.length === 0) {
@@ -49,12 +109,15 @@ function renderPlayers() {
                 ⭐ ${player.level}
             </div>
 
-            <button data-id="${player.id}">
-                ❌
-            </button>
+            <div class="player-actions">
+                <button class="btn-edit" data-id="${player.id}">✏️</button>
+                <button class="btn-delete" data-id="${player.id}">🗑️</button>
+            </div>
         `;
 
-        div.querySelector("button").onclick = async () => {
+        div.querySelector(".btn-edit").onclick = () => openEditModal(player);
+
+        div.querySelector(".btn-delete").onclick = async () => {
 
             const ok = await deletePlayerDB(player.id);
 

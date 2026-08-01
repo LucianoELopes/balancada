@@ -55,6 +55,31 @@ async function addPlayerDB(name, level, goalkeeper) {
 }
 
 // ==========================================
+// Editar jogador
+// ==========================================
+
+async function updatePlayerDB(id, name, level, goalkeeper) {
+
+    const { error } = await supabaseClient
+        .from("players")
+        .update({
+            name: name,
+            level: level,
+            goalkeeper: goalkeeper
+        })
+        .eq("id", id);
+
+    if (error) {
+        alert("Erro ao atualizar:\n\n" + error.message);
+        console.error(error);
+        return false;
+    }
+
+    return true;
+
+}
+
+// ==========================================
 // Excluir jogador
 // ==========================================
 
