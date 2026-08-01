@@ -1,68 +1,72 @@
-// ===============================
+// ==========================================
 // SUPABASE
-// ===============================
+// ==========================================
 
 const { createClient } = window.supabase;
 
-const supabase = createClient(
+const db = createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
-console.log("Supabase OK");
+async function getPlayers() {
 
-// Buscar todos os jogadores
-async function loadPlayers() {
-
-    const { data, error } = await supabase
+    const { data, error } = await db
         .from("players")
-        .select("*");
+        .select("*")
+        .eq("active", true)
+        .order("name", { ascending: true });
 
-    alert("ERRO: " + JSON.stringify(error));
-    alert("DADOS: " + JSON.stringify(data));
+    if (error) {
 
-    return data || [];
+        alert("Erro ao carregar jogadores:\n\n" + error.message);
 
-}
-
-async function savePlayer(player) {
-
-    try {
-
-        const { data, error } = await supabase
-            .from("players")
-            .insert(player)
-            .select();
-
-        console.log("DATA:", data);
-        console.log("ERROR:", error);
-
-        if (error) {
-            alert(error.message);
-            return;
-        }
-
-        alert("Jogador salvo!");
-
-    } catch (e) {
-
-        alert(e.message);
-        console.error(e);
+        return [];
 
     }
 
+    return data ?? [];
+
 }
 
-// Remover jogador
-async function deletePlayer(id) {
+async function addPlayerDB(name, level, goalkeeper) {
 
-    const { error } = await supabase
+    const { error } = await db
+        .from("players")
+        .insert([{
+            name,
+            level,
+            goalkeeper,
+            active: true
+        }]);
+
+    if (error) {
+
+        alert("Erro ao salvar:\n\n" + error.message);
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+async function deletePlayerDB(id) {
+
+    const { error } = await db
         .from("players")
         .delete()
         .eq("id", id);
 
     if (error) {
-        console.error(error);
+
+        alert("Erro ao excluir:\n\n" + error.message);
+
+        return false;
+
     }
+
+    return true;
 
 }
