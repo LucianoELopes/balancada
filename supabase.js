@@ -2,13 +2,10 @@
 // SUPABASE
 // ==========================================
 
-const { createClient } = window.supabase;
-
-const db = createClient(
+const supabase = window.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-
 async function getPlayers() {
 
     const { data, error } = await db
