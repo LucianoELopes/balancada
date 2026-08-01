@@ -16,15 +16,13 @@ async function loadPlayers() {
 
     const { data, error } = await supabase
         .from("players")
-        .select("*")
-        .order("name");
+        .select("*");
 
-    if (error) {
-        console.error(error);
-        return [];
-    }
+    alert("ERRO: " + JSON.stringify(error));
+    alert("DADOS: " + JSON.stringify(data));
 
-    return data;
+    return data || [];
+
 }
 
 async function savePlayer(player) {
